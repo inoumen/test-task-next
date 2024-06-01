@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  movies    Movies[]
+  
+  @@map("users")
+}
+
+model Movies {
+  id             String   @id @default(uuid())
+  userId         String   @map("user_id")
+  user           Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String
+  publishingYear Int @map("publishing_year")
+  poster         String
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  
+  @@map("movies")
+}
+
