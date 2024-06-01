@@ -27,23 +27,26 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  webpack: (config) => {
-    config.ignoreWarnings = [
-      { module: /node_modules\/swagger-client\// },
-      { file: /node_modules\/swagger-client\// },
-      { module: /node_modules\/swagger-ui-react\// },
-      { file: /node_modules\/swagger-ui-react\// },
-    ];
-
-    return config;
-  },
+  // webpack: (config) => {
+  //   config.module.rules.push({
+  //     test: /\.(js|mjs|jsx|ts|tsx)$/,
+  //     enforce: "pre",
+  //     include: [/node_modules\/swagger-client/, /node_modules\/swagger-ui-react/],
+  //     use: [
+  //       {
+  //         loader: "ignore-loader",
+  //       },
+  //     ],
+  //   });
+  //   return config;
+  // },
   async headers() {
     return [
       {
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "*" }, 
+          { key: "Access-Control-Allow-Origin", value: "*" },
           { key: "Access-Control-Allow-Methods", value: "GET,DELETE,PATCH,POST,PUT" },
           {
             key: "Access-Control-Allow-Headers",
